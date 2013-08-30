@@ -2,8 +2,8 @@ var USERNAME = "Your Username";
 var PASSWORD = "Your Password";
 
 var casper = require('casper').create({
-    verbose: true,
-    logLevel: 'debug',
+//    verbose: true,
+//    logLevel: 'debug',
     pageSettings: {
         loadImages: false,         // The WebPage instance used by Casper will
         loadPlugins: false,         // use these settings
@@ -22,12 +22,12 @@ if(!courseKey) {
 
 // print out all the messages in the headless browser context
 casper.on('remote.message', function (msg) {
-    this.echo('remote message caught: ' + msg);
+//    this.echo('remote message caught: ' + msg);
 });
 
 // print out all the messages in the headless browser context
 casper.on("page.error", function (msg, trace) {
-    this.echo("Page Error: " + msg, "ERROR");
+//    this.echo("Page Error: " + msg, "ERROR");
 });
 
 casper.start("https://accounts.coursera.org/signin", function () {
@@ -36,11 +36,11 @@ casper.start("https://accounts.coursera.org/signin", function () {
 
 casper.then(function () {
     this.waitForSelector("#signin-email", function () {
-        this.evaluate(function () {
-            document.querySelector('#signin-email').setAttribute('value', USERNAME);
-            document.querySelector('#signin-password').setAttribute('value', PASSWORD);
+        this.evaluate(function (username, password) {
+            document.querySelector('#signin-email').setAttribute('value', username);
+            document.querySelector('#signin-password').setAttribute('value', password);
             document.querySelector("button[type=submit]").click()
-        });
+        }, USERNAME, PASSWORD);
     });
 
     console.log("Waiting a bit so login is complete");
@@ -90,7 +90,7 @@ casper.then(function () {
 
     console.log("Downloading Course: ", course.name);
 
-    var coursePath = "/Users/andrebatista/Dropbox/courses/" + course.name;
+    var coursePath = "courses/" + course.name;
 
     fs.makeTree(coursePath);
 

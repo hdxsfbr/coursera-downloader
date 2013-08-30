@@ -8,4 +8,5 @@ Usage:
 3. Run the script with CasperJs passing the course key as an argument:
    * `casperjs coursera-downloader.js sdn-001`
 4. Wait patiently while the script downloads all PDF, PPT and MP4 assets
+   * Assets are downloaded to ./courses/Course Name
 5. Upload course knowledge to your brain (cable not included) :)
